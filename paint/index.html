@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ドット絵ペイント</title>
+
+    <!--
+      最小限の見た目だけ整えています（Tailwind は使っていません）。
+      ここに CSS を足していくだけで、自由に装飾を拡張できます。
+
+      ＜マス目の作り方＞
+      flex や grid は使わず、各マス(.pixel-cell)を inline-block で横に並べ、
+      コンテナ(.pixel-canvas)の幅を「マス幅 × 16」にすることで自然に折り返させています。
+    -->
+    <style>
+      body {
+        margin: 24px;
+        font-family: sans-serif;
+        line-height: 1.6;
+      }
+
+      /* マス目コンテナ。幅 = 20px × 16マス = 320px。
+         font-size: 0 は inline-block の間にできる余白(隙間)を消すためのおまじない。 */
+      .pixel-canvas {
+        width: 320px;
+        font-size: 0;
+        border: 1px solid #999;
+        margin: 16px 0;
+      }
+
+      /* 1マス。box-sizing: border-box で「枠線を含めて 20px」にして、ぴったり16列にする。 */
+      .pixel-cell {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #eee;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .controls button {
+        padding: 8px 16px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>ドット絵ペイント</h1>
+    <p>マス目をクリックして塗ってみましょう。</p>
+
+    <!-- マス目はここに JavaScript(renderGrid) が自動で並べます。 -->
+    <div id="canvas" class="pixel-canvas"></div>
+
+    <!-- 操作ボタン。クリックされたときの処理は main.ts で結びつけています。 -->
+    <div class="controls">
+      <button id="clear-button">全消去</button>
+    </div>
+
+    <!--
+      ★拡張ポイント（HTML）：ステップ2以降で使う空きエリアです。
+        ・カラーパレット → ここに色ボタンを並べる
+        ・アニメのフレーム一覧 → ここにサムネイルを並べる
+      不要なうちは無くてもかまいません。
+    -->
+
+    <!-- TypeScript を読み込みます（Vite が自動で変換してくれます）。 -->
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
