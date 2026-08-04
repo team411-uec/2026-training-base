@@ -9,8 +9,6 @@
       最小限の見た目だけ整えています（Tailwind は使っていません）。
       ここに CSS を足していくだけで、自由に装飾を拡張できます。
       ・各要素には class（例: omikuji-result）が付いているので狙いやすいです。
-      ・[data-result="大吉"] のように、おみくじの結果ごとに装飾を変えることもできます
-        （render.ts で結果を data-result 属性に入れた場合）。
     -->
     <style>
       body {
@@ -34,14 +32,6 @@
         font-size: 16px;
         cursor: pointer;
       }
-
-      /*
-        ＜装飾の拡張例＞ 下のコメントを外すと、大吉のときだけ背景が変わります。
-        （render.ts で el.dataset.result = result; を書いている必要があります）
-        .omikuji-result[data-result="大吉"] {
-          background-color: gold;
-        }
-      */
     </style>
   </head>
 

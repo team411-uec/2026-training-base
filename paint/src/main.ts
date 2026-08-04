@@ -20,13 +20,12 @@ const main = (): void => {
   // マス目を画面に並べる。
   renderGrid();
 
-  // 並べたマスを全部取得して、1つずつ「クリックされたときの処理」を結びつける。
-  const cells = document.querySelectorAll(".pixel-cell");
-  for (const cell of cells) {
-    cell.addEventListener("click", () => {
-      // このマスが「何番目か」を data-index から取り出す（文字列なので数値に変換）。
-      const index = Number((cell as HTMLElement).dataset.index);
-
+  // マスを1つずつ id（cell-0, cell-1…）で取得して、
+  // 「クリックされたときの処理」を結びつける。
+  // ここでの index が「何番目のマスか」なので、そのまま処理の中で使えます。
+  for (let index = 0; index < GRID_SIZE * GRID_SIZE; index++) {
+    const cell = document.getElementById(`cell-${index}`);
+    cell?.addEventListener("click", () => {
       // データを更新する（このマスを黒で塗る）。
       paintCell(index, DEFAULT_COLOR);
 

@@ -13,10 +13,10 @@ import { GRID_SIZE } from "./canvas";
 
 // マス目（セル）を画面に並べて作る関数。【この関数は完成済み】
 // GRID_SIZE×GRID_SIZE の数だけ <div> を作り、#canvas の中に追加していきます。
-// 各セルには次の3つを付けています：
+// 各セルには次の2つを付けています：
 //   ・class="pixel-cell"      … まとめてスタイルを当てたり、まとめて取得するため
-//   ・id="cell-0", "cell-1"…  … renderCell で1マスずつ狙って色を変えるため
-//   ・data-index="0", "1"…    … クリックされたとき「何番のマスか」を知るため
+//   ・id="cell-0", "cell-1"…  … renderCell で1マスずつ狙って色を変えたり、
+//                               クリックされたとき「何番のマスか」を知るため
 export const renderGrid = (): void => {
   const container = document.getElementById("canvas");
   if (container === null) return;
@@ -29,7 +29,6 @@ export const renderGrid = (): void => {
     const cell = document.createElement("div");
     cell.className = "pixel-cell";
     cell.id = `cell-${index}`;
-    cell.dataset.index = `${index}`;
     container.appendChild(cell);
   }
 };

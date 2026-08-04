@@ -70,9 +70,6 @@ CLI 版（小まとめ）からの対応関係：
 ### 易（HTML / CSS 中心）
 
 - 結果やボタンの文言・色を変える（`index.html` の `<style>`）。
-- `index.html` の `<style>` に `.omikuji-result[data-result="大吉"] { background-color: gold; }` を足して、
-  **大吉のときだけ見た目を変える**。
-  （`render.ts` で `el.dataset.result = result;` を書いておく必要があります）
 
 ### 中（DOM 操作中心）
 
