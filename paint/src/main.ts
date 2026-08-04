@@ -2,7 +2,7 @@
 // イベント層 (main.ts)
 // -------------------------------------------------------------
 // アプリ全体の「配線」をする層です。
-//   ・キャンバス(PixelCanvas)を用意する
+//   ・キャンバスを用意する（canvas.ts の clearCanvas() を1回呼んで、全マスを白にする）
 //   ・マス目を描く（renderGrid を呼ぶ）
 //   ・「マスがクリックされたら何をするか」「全消去ボタンが押されたら何をするか」を
 //     addEventListener で結びつける
@@ -10,15 +10,15 @@
 // ★この層は配布時点で完成しています（ステップ1で render.ts を実装すれば動きます）。
 // =============================================================
 
-import { PixelCanvas, GRID_SIZE, DEFAULT_COLOR } from "./canvas";
+import { clearCanvas, paintCell, getCellColor, GRID_SIZE, DEFAULT_COLOR } from "./canvas";
 import { renderGrid, renderCell } from "./render";
 
 const main = (): void => {
-  // キャンバスを1つ用意する（constructor の中で全マスが白になります）。
-  const canvas = new PixelCanvas(GRID_SIZE);
+  // キャンバスを用意する（clearCanvas() を1回呼ぶと、全マスが白になります）。
+  clearCanvas();
 
   // マス目を画面に並べる。
-  renderGrid(canvas);
+  renderGrid();
 
   // 並べたマスを全部取得して、1つずつ「クリックされたときの処理」を結びつける。
   const cells = document.querySelectorAll(".pixel-cell");
@@ -28,7 +28,7 @@ const main = (): void => {
       const index = Number((cell as HTMLElement).dataset.index);
 
       // データを更新する（このマスを黒で塗る）。
-      canvas.paint(index, DEFAULT_COLOR);
+      paintCell(index, DEFAULT_COLOR);
 
       // ↓ ステップ0 では、この console.log だけが動きます（Console に座標が出る）。
       console.log("塗ったマス:", index);
@@ -46,10 +46,10 @@ const main = (): void => {
   // 「全消去」ボタンが押されたときの処理。
   const clearButton = document.getElementById("clear-button");
   clearButton?.addEventListener("click", () => {
-    canvas.clear();
+    clearCanvas();
     // 全マスを、データ上の色（全消去後なので白）で塗り直す。
-    for (let i = 0; i < canvas.size * canvas.size; i++) {
-      renderCell(i, canvas.getColor(i));
+    for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+      renderCell(i, getCellColor(i));
     }
   });
 };

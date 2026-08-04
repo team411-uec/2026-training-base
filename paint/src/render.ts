@@ -9,22 +9,22 @@
 // ★この層が、研修の主役「TypeScript で HTML を操作する」の中心です。
 // =============================================================
 
-import { PixelCanvas } from "./canvas";
+import { GRID_SIZE } from "./canvas";
 
 // マス目（セル）を画面に並べて作る関数。【この関数は完成済み】
-// canvas のサイズ分だけ <div> を作り、#canvas の中に追加していきます。
+// GRID_SIZE×GRID_SIZE の数だけ <div> を作り、#canvas の中に追加していきます。
 // 各セルには次の3つを付けています：
 //   ・class="pixel-cell"      … まとめてスタイルを当てたり、まとめて取得するため
 //   ・id="cell-0", "cell-1"…  … renderCell で1マスずつ狙って色を変えるため
 //   ・data-index="0", "1"…    … クリックされたとき「何番のマスか」を知るため
-export const renderGrid = (canvas: PixelCanvas): void => {
+export const renderGrid = (): void => {
   const container = document.getElementById("canvas");
   if (container === null) return;
 
   // 念のため、すでにあるマスを消してから作り直します。
   container.textContent = "";
 
-  const total = canvas.size * canvas.size;
+  const total = GRID_SIZE * GRID_SIZE;
   for (let index = 0; index < total; index++) {
     const cell = document.createElement("div");
     cell.className = "pixel-cell";

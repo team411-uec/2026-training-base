@@ -35,7 +35,7 @@ npm run dev
 
 | ファイル | 層 | 役割 | 状態 |
 | --- | --- | --- | --- |
-| `src/omikuji.ts` | データ層 | おみくじの型・比率・箱(OmikujiBox)クラス | 完成済み |
+| `src/omikuji.ts` | データ層 | おみくじの型・比率・くじを引く関数(resetOmikuji / drawOmikuji) | 完成済み |
 | `src/render.ts` | 描画層 | 状態を画面(DOM)に表示する | **空（ステップ1で実装）** |
 | `src/main.ts` | イベント層 | ボタンと処理を結びつける配線 | 完成済み |
 
@@ -81,13 +81,14 @@ CLI 版（小まとめ）からの対応関係：
   `<ul id="history">` に `appendChild` していく。`main.ts` 側で結果を配列に `push` して渡す。
 - リセットを押した回数を数えて画面に出す。
 
-### 難（型・クラス・設計）
+### 難（型・設計）
 
 - **残りくじ枚数を表示**する。
-  `omikuji.ts` の `OmikujiBox` に「残り枚数を返すメソッド」を足してから、`render.ts` で表示する。
-  （`tickets` は `private` なので、外から数えるのではなく **箱にメソッドを足す** のがポイント）
+  `omikuji.ts` に「残り枚数を返す関数」を足してから、`render.ts` で表示する。
+  （`tickets` は `export` されていないので、外から数えるのではなく
+  **omikuji.ts の中に関数を足す** のがポイント）
 - **比率を画面から変更できる UI**（`input` 要素）を作る。
-  入力値を `Number()` で読み取り、`reset` が比率を受け取れるように改修する。
+  入力値を `Number()` で読み取り、`resetOmikuji` が比率を受け取れるように改修する。
 - **おみくじの種類を増やす**（例: 半吉）。
   `omikuji.ts` の `OmikujiResult` 型に `"半吉"` を足し、`omikujiRatios` にも個数を足すだけ。
 
@@ -99,7 +100,7 @@ CLI 版（小まとめ）からの対応関係：
 
 研修で学んだ範囲だけで作れるようにしています。
 
-- 使うもの：TypeScript（型・クラス・関数・ファイル分割）、基本の HTML タグ、
+- 使うもの：TypeScript（型・関数・ファイル分割）、基本の HTML タグ、
   DOM 操作（`getElementById` / `textContent` / `createElement` / `appendChild` など）、`addEventListener`。
 - 避けるもの：React/Vue などのフレームワーク、`flex`/`grid` を使った複雑なレイアウトの自作、
-  クラスの継承（`extends`）、`alert` などのポップアップ。
+  クラス（`class`）、`alert` などのポップアップ。

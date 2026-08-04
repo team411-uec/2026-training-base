@@ -3,7 +3,7 @@
 // -------------------------------------------------------------
 // アプリ全体の「配線」をする層です。
 //   ・画面の要素(ボタンなど)を取得する
-//   ・おみくじ箱(OmikujiBox)を用意する
+//   ・おみくじ箱を用意する（omikuji.ts の resetOmikuji() を1回呼んで、くじが入った状態にする）
 //   ・「ボタンが押されたら何をするか」を addEventListener で結びつける
 //
 // CLI 版では readline でキーボード入力を待つ while ループでしたが、
@@ -14,12 +14,12 @@
 // ★この層は配布時点で完成しています（ステップ1で render.ts を実装すれば動きます）。
 // =============================================================
 
-import { OmikujiBox } from "./omikuji";
+import { resetOmikuji, drawOmikuji } from "./omikuji";
 import { renderResult } from "./render";
 
 const main = (): void => {
-  // おみくじ箱を1つ用意する（constructor の中で reset され、くじが入った状態になります）。
-  const box = new OmikujiBox();
+  // おみくじ箱を用意する（resetOmikuji() を1回呼ぶと、くじが入った状態になります）。
+  resetOmikuji();
 
   // 画面のボタンを取得する。
   const drawButton = document.getElementById("draw-button");
@@ -27,7 +27,7 @@ const main = (): void => {
 
   // 「引く」ボタンが押されたときの処理。
   drawButton?.addEventListener("click", () => {
-    const result = box.draw();
+    const result = drawOmikuji();
 
     // ↓ ステップ0 では、この console.log だけが動きます（Console に結果が出る）。
     console.log("引いた結果:", result);
@@ -43,7 +43,7 @@ const main = (): void => {
 
   // 「リセット」ボタンが押されたときの処理。
   resetButton?.addEventListener("click", () => {
-    box.reset();
+    resetOmikuji();
     // 表示を初期状態（結果なし）に戻す。null を渡しています。
     renderResult(null);
   });

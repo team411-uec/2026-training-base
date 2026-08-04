@@ -36,7 +36,7 @@ npm run dev
 
 | ファイル | 層 | 役割 | 状態 |
 | --- | --- | --- | --- |
-| `src/canvas.ts` | データ層 | 各マスの色を持つ箱(PixelCanvas)クラス | 完成済み |
+| `src/canvas.ts` | データ層 | 各マスの色を持ち、塗る関数(clearCanvas / paintCell / getCellColor) | 完成済み |
 | `src/render.ts` | 描画層 | 状態を画面(DOM)に表示する | `renderGrid` は完成 / **`renderCell` は空（ステップ1）** |
 | `src/main.ts` | イベント層 | クリックと処理を結びつける配線 | 完成済み |
 
@@ -93,7 +93,7 @@ npm run dev
 
 研修で学んだ範囲だけで作れるようにしています。
 
-- 使うもの：TypeScript（型・クラス・関数・ファイル分割）、基本の HTML タグ、
+- 使うもの：TypeScript（型・関数・ファイル分割）、基本の HTML タグ、
   DOM 操作（`getElementById` / `createElement` / `appendChild` / `style` など）、`addEventListener`。
 - 避けるもの：React/Vue などのフレームワーク、`flex`/`grid` を使った複雑なレイアウトの自作、
-  クラスの継承（`extends`）、`alert` などのポップアップ。
+  クラス（`class`）、`alert` などのポップアップ。

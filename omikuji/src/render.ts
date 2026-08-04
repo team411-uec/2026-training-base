@@ -37,7 +37,7 @@ import type { OmikujiResult } from "./omikuji";
 // ＜発展ヒント（やってみたい人向け）＞
 //  ・el.dataset.result = result; のように data-result 属性を入れておくと、
 //    あとで CSS の [data-result="大吉"] で「大吉だけ金色にする」等の演出ができます。
-//  ・draw() は箱が空のときにも null を返します。余裕があれば
+//  ・drawOmikuji() は箱が空のときにも null を返します。余裕があれば
 //    「リセット直後」と「箱が空」を区別して別メッセージを出してみましょう。
 // =============================================================
 export const renderResult = (result: OmikujiResult | null): void => {
