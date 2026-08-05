@@ -1,69 +1,42 @@
-// =============================================================
 // 描画層 (render.ts)
-// -------------------------------------------------------------
-// 「データ(状態)を受け取って、画面(DOM)に表示する」だけを担当する層です。
-// 塗るロジックやクリック判定などは書きません。
-//   ・塗るロジック   → canvas.ts（データ層）
-//   ・クリック配線   → main.ts（イベント層）
-//
-// ★この層が、研修の主役「TypeScript で HTML を操作する」の中心です。
-// =============================================================
+// 状態を受け取って画面(DOM)に表示するだけを担当する。
+// 塗るロジックは canvas.ts、クリックと処理の連携は main.ts が持つ。
 
-import { PixelCanvas } from "./canvas";
+import { GRID_SIZE } from "./canvas";
 
-// マス目（セル）を画面に並べて作る関数。【この関数は完成済み】
-// canvas のサイズ分だけ <div> を作り、#canvas の中に追加していきます。
-// 各セルには次の3つを付けています：
-//   ・class="pixel-cell"      … まとめてスタイルを当てたり、まとめて取得するため
-//   ・id="cell-0", "cell-1"…  … renderCell で1マスずつ狙って色を変えるため
-//   ・data-index="0", "1"…    … クリックされたとき「何番のマスか」を知るため
-export const renderGrid = (canvas: PixelCanvas): void => {
+// マス目（セル）を画面に並べて作る（完成済み）。
+// GRID_SIZE×GRID_SIZE の数だけ <div> を作り、#canvas に追加する。
+// 各セルには class="pixel-cell" を付ける（まとめて取得し、index 番目で1マスずつ狙う）。
+export function renderGrid(): void {
   const container = document.getElementById("canvas");
   if (container === null) return;
 
-  // 念のため、すでにあるマスを消してから作り直します。
+  // 念のため、すでにあるマスを消してから作り直す。
   container.textContent = "";
 
-  const total = canvas.size * canvas.size;
+  const total = GRID_SIZE * GRID_SIZE;
   for (let index = 0; index < total; index++) {
     const cell = document.createElement("div");
     cell.className = "pixel-cell";
-    cell.id = `cell-${index}`;
-    cell.dataset.index = `${index}`;
     container.appendChild(cell);
   }
-};
+}
 
-// =============================================================
-// ★★★ ステップ1（最初の課題）：この関数を実装しよう！ ★★★
-// -------------------------------------------------------------
-// 今の状態でマスをクリックすると、ブラウザの開発者ツール(F12)の
-// Console には「塗ったマス: 5」のように表示されます。
-// つまり、塗るデータ自体はちゃんと更新されています。
+// ステップ1（最初の課題）: この関数を実装する。
 //
-// でもマスの色は変わりません。なぜなら ↓ のこの関数の中身が空だからです。
+// いまはマスをクリックすると Console に「塗ったマス: 5」と出るが、色は変わらない。
+// この関数の中身が空だからで、ここに DOM 操作を書けばマスが塗られる。
 //
-// この関数の中に「指定したマスの色を変える」処理を書いて、
-// クリックしたマスが塗られるようにしてください。
-//
-// ＜ヒント＞
-//  1. 色を変えたいマスの要素を取得する。
-//       renderGrid で各マスに id="cell-0", "cell-1"… を付けています。
-//       const el = document.getElementById(`cell-${index}`);
-//  2. その要素の背景色を変える。
-//       el.style.backgroundColor = color;
-//
-// うまくいけば、クリックでマスが黒くなり、「全消去」で白に戻ります。
-// =============================================================
-export const renderCell = (index: number, color: string): void => {
-  // TODO（ステップ1）: ここに DOM 操作を書いて、マスの色を変えよう。
-};
+// ヒント:
+//  - 全マスは class="pixel-cell"。document.getElementsByClassName でまとめて取れる。
+//  - その中の index 番目が、色を変えたいマス。
+//  - 要素の背景色は style.backgroundColor で変えられる。
+export function renderCell(index: number, color: string): void {
+  // ステップ0 ではコンソールに座標が出るだけ。
+  console.log("塗ったマス:", index);
 
-// =============================================================
-// ★拡張ポイント（描画層）：ステップ2以降。必要になったら関数を足そう。
-// -------------------------------------------------------------
-// ・カラーパレットの色見本を画面に並べたい
-//     → 色ボタンを createElement で作って表示する関数を足す。
-// ・アニメのフレーム一覧を表示したい
-//     → フレームのサムネイルを並べる関数を足す。
-// =============================================================
+  // TODO（ステップ1）: ここに DOM 操作を書いて、マスの色を変える。
+}
+
+// 拡張ポイント（ステップ2以降）。必要になったら関数を足す。
+//  - カラーパレットの色見本を並べる: 色ボタンを document.createElement で作って表示する関数を足す。

@@ -6,11 +6,9 @@
     <title>おみくじアプリ</title>
 
     <!--
-      最小限の見た目だけ整えています（Tailwind は使っていません）。
-      ここに CSS を足していくだけで、自由に装飾を拡張できます。
-      ・各要素には class（例: omikuji-result）が付いているので狙いやすいです。
-      ・[data-result="大吉"] のように、おみくじの結果ごとに装飾を変えることもできます
-        （render.ts で結果を data-result 属性に入れた場合）。
+      最小限の見た目だけ整えている（Tailwind は使わない）。
+      各要素に class（例: omikuji-result）を付けているので、CSS を足して自由に装飾できる。
+      拡張ポイント（ステップ2以降）: 結果やボタンの文言・色を変える（この <style> を編集）。
     -->
     <style>
       body {
@@ -34,14 +32,6 @@
         font-size: 16px;
         cursor: pointer;
       }
-
-      /*
-        ＜装飾の拡張例＞ 下のコメントを外すと、大吉のときだけ背景が変わります。
-        （render.ts で el.dataset.result = result; を書いている必要があります）
-        .omikuji-result[data-result="大吉"] {
-          background-color: gold;
-        }
-      */
     </style>
   </head>
 
@@ -50,27 +40,26 @@
     <p>「おみくじを引く」ボタンを押してみましょう。</p>
 
     <!--
-      結果を表示する場所です。id="result" を render.ts から取得して書き換えます。
-      最初は固定の文言が出ています（ステップ1を実装するまで、ここは変わりません）。
+      結果を表示する場所。render.ts が id="result" を取得して書き換える。
+      ステップ1 を実装するまでは、この固定の文言のまま変わらない。
     -->
     <div id="result" class="omikuji-result">ここに結果が出ます</div>
 
-    <!-- 操作ボタン。クリックされたときの処理は main.ts で結びつけています。 -->
+    <!-- 操作ボタン。クリック時の処理は main.ts で結びつけている。 -->
     <div class="omikuji-controls">
       <button id="draw-button">おみくじを引く</button>
       <button id="reset-button">リセット</button>
     </div>
 
     <!--
-      ★拡張ポイント（HTML）：ステップ2以降で使う空きエリアです。
-        ・残りくじ枚数を出したい → <div id="remaining"> を使う
-        ・引いた履歴を出したい   → <ul id="history"> に <li> を足していく
-      不要なうちはこのままでも、消してもかまいません。
+      拡張ポイント（ステップ2以降で使う空きエリア）。使わないうちは消してもよい。
+        - 残りくじ枚数を出す → <div id="remaining">
+        - 引いた履歴を出す   → <ul id="history"> に <li> を足していく
     -->
     <div id="remaining" class="omikuji-remaining"></div>
     <ul id="history" class="omikuji-history"></ul>
 
-    <!-- TypeScript を読み込みます（Vite が自動で変換してくれます）。 -->
+    <!-- TypeScript を読み込む（Vite が変換する）。 -->
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -1,77 +1,38 @@
-// =============================================================
 // データ層 (canvas.ts)
-// -------------------------------------------------------------
-// ドット絵キャンバスの「データ」と「箱（PixelCanvas クラス）」を定義する層です。
-// 「どのマスが何色か」という情報と、その操作だけに専念し、
-// 画面表示(DOM操作)は一切しません。
-//   ・画面に描く仕事   → render.ts（描画層）
-//   ・クリックとの配線 → main.ts（イベント層）
-//
-// ★この canvas.ts は配布時点で完成しています。まずは中身を「読んで理解」しましょう。
-// =============================================================
+// ドット絵キャンバスのデータと操作関数を定義する層。
+// どのマスが何色かという情報とその操作だけに専念し、画面表示(DOM操作)はしない。
+// この層は完成済み。まずは読んで理解する。
 
-// マス目の一辺の数（16 にすると 16×16 = 256 マス）。
+// 一辺のマス目の数（16 なら 16×16 = 256 マス）。
 export const GRID_SIZE = 16;
 
 // 塗るときの色と、空（消えている）マスの色。
 export const DEFAULT_COLOR = "#000000"; // 黒
 export const EMPTY_COLOR = "#ffffff"; // 白
 
-// ドット絵キャンバスクラス。
-// 「各マスの色(cells)」というデータと、「塗る」「全消去」などの機能をまとめています。
-export class PixelCanvas {
-  // マスの一辺の数。
-  public size: number;
+// 各マスの色を1次元配列で持つ（長さは GRID_SIZE×GRID_SIZE）。
+// export していないので外部からは直接触れず、下の関数を通して操作する。
+let cells: string[] = [];
 
-  // private: 各マスの色を1次元配列で持ちます（長さは size×size）。
-  // 例: size=16 なら cells[0]〜cells[255]。外部から直接触らせません。
-  private cells: string[] = [];
-
-  // インスタンス作成時(new された時)に、サイズを決めて全マスを空(白)にします。
-  constructor(size: number) {
-    this.size = size;
-    this.clear();
+// 全マスを空(白)に戻す。
+export function clearCanvas(): void {
+  cells = [];
+  for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+    cells.push(EMPTY_COLOR);
   }
-
-  // 全マスを空(白)に戻します。
-  public clear(): void {
-    this.cells = [];
-    for (let i = 0; i < this.size * this.size; i++) {
-      this.cells.push(EMPTY_COLOR);
-    }
-    console.log("キャンバスを全消去しました");
-  }
-
-  // index 番目のマスを color で塗ります。
-  public paint(index: number, color: string): void {
-    this.cells[index] = color;
-  }
-
-  // index 番目のマスの色を返します。
-  public getColor(index: number): string {
-    return this.cells[index];
-  }
-
-  // ============================================================
-  // ★拡張ポイント（データ層）：ベースでは未実装。必要になったら足してみよう。
-  // ------------------------------------------------------------
-  // ・消しゴム
-  //     → paint(index, EMPTY_COLOR) を呼べば白に戻せる（新メソッドは不要）。
-  //
-  // ・バケツ塗り（塗りつぶし）
-  //     → クリックしたマスと同じ色のマスを、つながっている範囲だけ塗り替える。
-  //        getColor で隣のマスの色を調べながら塗っていく（上下左右の index は
-  //        index-1 / index+1 / index-size / index+size で計算できる）。
-  //
-  // ・Undo / Redo（元に戻す・やり直す）
-  //     → 塗るたびに「どのマスを何色から何色に変えたか」を配列に push して記録し、
-  //        戻すときは逆の色を paint する。
-  //
-  // ・アニメーション（パラパラマンガ）
-  //     → cells のコピー（スナップショット）を「フレーム配列」に貯めて、
-  //        順番に表示できるようにする。
-  //
-  // ・保存・再現
-  //     → cells を文字列にして保存し、読み込み時に元に戻す。
-  // ============================================================
+  console.log("キャンバスを全消去しました");
 }
+
+// index 番目のマスを color で塗る。
+export function paintCell(index: number, color: string): void {
+  cells[index] = color;
+}
+
+// index 番目のマスの色を返す。
+export function getCellColor(index: number): string {
+  return cells[index];
+}
+
+// 拡張ポイント（ステップ2以降）。必要になったら足す。
+//  - 塗る色を変える: 上の DEFAULT_COLOR を別の色に変える（新しい関数は不要）。
+//  - Undo / Redo: 塗った操作を配列で記録して、元に戻す・やり直す関数を足す。

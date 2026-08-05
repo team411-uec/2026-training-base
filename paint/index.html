@@ -6,12 +6,10 @@
     <title>ドット絵ペイント</title>
 
     <!--
-      最小限の見た目だけ整えています（Tailwind は使っていません）。
-      ここに CSS を足していくだけで、自由に装飾を拡張できます。
+      最小限の見た目だけ整えている（Tailwind は使わない）。CSS を足して自由に装飾できる。
 
-      ＜マス目の作り方＞
-      flex や grid は使わず、各マス(.pixel-cell)を inline-block で横に並べ、
-      コンテナ(.pixel-canvas)の幅を「マス幅 × 16」にすることで自然に折り返させています。
+      マス目の作り方: flex や grid は使わず、各マス(.pixel-cell)を inline-block で横に並べ、
+      コンテナ(.pixel-canvas)の幅を「マス幅 × 16」にして自然に折り返させている。
     -->
     <style>
       body {
@@ -21,7 +19,7 @@
       }
 
       /* マス目コンテナ。幅 = 20px × 16マス = 320px。
-         font-size: 0 は inline-block の間にできる余白(隙間)を消すためのおまじない。 */
+         font-size: 0 は inline-block の間にできる余白(隙間)を消すため。 */
       .pixel-canvas {
         width: 320px;
         font-size: 0;
@@ -29,7 +27,7 @@
         margin: 16px 0;
       }
 
-      /* 1マス。box-sizing: border-box で「枠線を含めて 20px」にして、ぴったり16列にする。 */
+      /* 1マス。box-sizing: border-box で枠線を含めて 20px にし、ぴったり16列にする。 */
       .pixel-cell {
         display: inline-block;
         box-sizing: border-box;
@@ -52,22 +50,20 @@
     <h1>ドット絵ペイント</h1>
     <p>マス目をクリックして塗ってみましょう。</p>
 
-    <!-- マス目はここに JavaScript(renderGrid) が自動で並べます。 -->
+    <!-- マス目は renderGrid がここに並べる。 -->
     <div id="canvas" class="pixel-canvas"></div>
 
-    <!-- 操作ボタン。クリックされたときの処理は main.ts で結びつけています。 -->
+    <!-- 操作ボタン。クリック時の処理は main.ts で結びつけている。 -->
     <div class="controls">
       <button id="clear-button">全消去</button>
     </div>
 
     <!--
-      ★拡張ポイント（HTML）：ステップ2以降で使う空きエリアです。
-        ・カラーパレット → ここに色ボタンを並べる
-        ・アニメのフレーム一覧 → ここにサムネイルを並べる
-      不要なうちは無くてもかまいません。
+      拡張ポイント（ステップ2以降で使う空きエリア）。
+        - カラーパレット → ここに色ボタンを並べる
     -->
 
-    <!-- TypeScript を読み込みます（Vite が自動で変換してくれます）。 -->
+    <!-- TypeScript を読み込む（Vite が変換する）。 -->
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
