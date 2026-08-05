@@ -6,12 +6,15 @@
 
 ---
 
-## 起動方法
-
-初回だけ依存パッケージを入れます。
+## 初回セットアップ
 
 ```bash
 npm install
+```
+
+## 起動方法
+
+```bash
 npm run dev
 ```
 
@@ -41,7 +44,7 @@ npm run dev
 | `src/render.ts` | 描画層 | 状態を画面(DOM)に表示する | 空（ステップ1で実装） |
 | `src/main.ts` | イベント層 | ボタンと処理を結びつける配線 | 完成済み |
 
-CLI 版（小まとめ）からの対応:
+CLI 版（小まとめ）との対応:
 
 - キーボード入力待ちの `while` + `readline` → ボタン + `addEventListener`（`main.ts`）
 - `console.log` での結果表示 → `textContent` で画面に表示（`render.ts`）
@@ -71,13 +74,13 @@ CLI 版（小まとめ）からの対応:
 
 - 結果やボタンの文言・色を変える（`index.html` の `<style>`）。
 
-### 中（DOM 操作中心）
-
-- 引いた履歴をリスト表示する。`render.ts` に履歴用の関数を足し、`createElement("li")` で項目を作って `<ul id="history">` に `appendChild` していく。`main.ts` で結果を配列に `push` して渡す。
-
-### 難（型・設計）
+### 中（型・設計）
 
 - 残りくじ枚数を表示する。`omikuji.ts` に残り枚数を返す関数を足してから `render.ts` で表示する（`tickets` は `export` していないので、外から数えるのではなく `omikuji.ts` の中に関数を足すのがポイント）。
+
+### 難（複雑なDOM操作）
+
+- 引いた履歴をリスト表示する。`render.ts` に履歴用の関数を足し、`createElement("li")` で項目を作って `<ul id="history">` に `appendChild` していく。`main.ts` で結果を配列に `push` して渡す。
 
 各ファイルには「拡張ポイント」というコメントがあります。そこを手がかりに進めてください。
 

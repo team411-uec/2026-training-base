@@ -22,7 +22,7 @@ export const omikujiRatios: Record<OmikujiResult, number> = {
 let tickets: OmikujiResult[] = [];
 
 // 箱の中身を omikujiRatios の比率どおりに入れ直す。
-export const resetOmikuji = (): void => {
+export function resetOmikuji(): void {
   tickets = [];
 
   for (const [result, count] of Object.entries(omikujiRatios)) {
@@ -33,12 +33,12 @@ export const resetOmikuji = (): void => {
   }
 
   console.log(`おみくじ箱をリセットしました。（合計 ${tickets.length} 枚）`);
-};
+}
 
 // 箱からランダムに1枚引いて返す。空のときは null を返す。
-export const drawOmikuji = (): OmikujiResult | null => {
+export function drawOmikuji(): OmikujiResult | null {
   if (tickets.length === 0) {
-    console.log("もうおみくじは空っぽです！リセットしてください。");
+    console.log("もうおみくじ箱は空っぽです！リセットしてください。");
     return null;
   }
 
@@ -46,10 +46,7 @@ export const drawOmikuji = (): OmikujiResult | null => {
   // splice は抜き出した要素の配列を返すので、その 0 番目を取り出す。
   const drawnTicket = tickets.splice(randomIdx, 1)[0];
   return drawnTicket;
-};
+}
 
 // 拡張ポイント（ステップ2以降）。必要になったら足す。
 //  - 残りくじ枚数を出す: tickets.length を返す関数をこのファイルに足す（tickets は外から読めない）。
-//  - 種類ごとの残数を出す: 指定した結果の枚数を数えて返す関数を足す。
-//  - 比率を画面から変える: resetOmikuji が比率を引数で受け取れるように改修する。
-//  - 種類を増やす（例: 半吉）: OmikujiResult 型と omikujiRatios の両方に足す。
